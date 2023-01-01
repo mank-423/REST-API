@@ -15,6 +15,15 @@ const articleSchema = new mongoose.Schema({
     content: String
 });
 const Article = mongoose.model("Article", articleSchema);
+
+//For home page 
+app.get("/", function(req, res){
+    myobj = {
+        title: "Welcome to the home page of Mayank's API",
+        content: "Use /articles in url to access the data, API built for learning purpose and can handle PUSH, POST, PUT, GET, PATCH requests."
+    };
+    res.send(myobj);
+})
  
 //Route should be same for the REST Api 
 //Get request

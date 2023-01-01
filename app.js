@@ -9,7 +9,7 @@ app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
 
-const conn = mongoose.connect("mongodb://127.0.0.1:27017/wikiDB", {useNewUrlParser: true}, ()=>{console.log("Connected");});
+const conn = mongoose.connect("mongodb+srv://admin-mank:mankMongo@cluster0.5sulplv.mongodb.net/wikiDB", {useNewUrlParser: true}, ()=>{console.log("Connected");});
 const articleSchema = new mongoose.Schema({
     title: String,
     content: String
@@ -21,12 +21,17 @@ const Article = mongoose.model("Article", articleSchema);
 //Chained method for the route method of express
 app.route("/articles")
 .get((req, res)=>{
-    Article.find(function(err, foundArticles){
-        if (err){
-            res.send(err);
-        }
-        res.send(foundArticles);
-    });
+    try{
+        Article.find(function(err, foundArticles){
+            if (err){
+                res.send(err);
+            }
+            res.send(foundArticles);
+        });
+    }
+    catch(e){
+        res.send("No articles in the API");
+    }
 })
 .post((req, res)=>{
     console.log(req.body.title);
